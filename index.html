@@ -3,495 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>진로시간 학습지</title>
+    <title>진로 학습지</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .container {
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            max-width: 600px;
-            width: 100%;
-            padding: 40px;
-            animation: slideIn 0.5s ease-out;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .header h1 {
-            color: #667eea;
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
-
-        .header p {
-            color: #999;
-            font-size: 14px;
-        }
-
-        .button-group {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 30px;
-            justify-content: center;
-        }
-
-        button {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: bold;
-        }
-
-        .btn-main {
-            background: #667eea;
-            color: white;
-            flex: 1;
-        }
-
-        .btn-main:hover {
-            background: #5568d3;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn-admin {
-            background: #f39c12;
-            color: white;
-        }
-
-        .btn-admin:hover {
-            background: #e67e22;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(243, 156, 18, 0.4);
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-            display: none;
-        }
-
-        .form-group.active {
-            display: block;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #333;
-            font-weight: 600;
-            font-size: 14px;
-        }
-
-        input[type="text"],
-        textarea {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #eee;
-            border-radius: 8px;
-            font-family: 'Segoe UI', sans-serif;
-            font-size: 14px;
-            transition: border-color 0.3s;
-        }
-
-        input[type="text"]:focus,
-        textarea:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 14px;
-            background: #27ae60;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 20px;
-        }
-
-        .submit-btn:hover {
-            background: #229954;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.4);
-        }
-
-        .submit-btn:active {
-            transform: translateY(0);
-        }
-
-        .admin-section {
-            display: none;
-        }
-
-        .admin-section.active {
-            display: block;
-        }
-
-        .password-input-group {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .password-input-group input {
-            flex: 1;
-        }
-
-        .password-input-group button {
-            background: #667eea;
-            color: white;
-            padding: 12px 20px;
-        }
-
-        .password-input-group button:hover {
-            background: #5568d3;
-        }
-
-        .admin-content {
-            display: none;
-            margin-top: 20px;
-        }
-
-        .admin-content.active {
-            display: block;
-        }
-
-        .data-list {
-            margin-top: 20px;
-        }
-
-        .data-item {
-            background: #f8f9fa;
-            padding: 15px;
-            margin-bottom: 15px;
-            border-radius: 8px;
-            border-left: 4px solid #667eea;
-        }
-
-        .data-item h3 {
-            color: #667eea;
-            font-size: 16px;
-            margin-bottom: 10px;
-        }
-
-        .data-item p {
-            color: #555;
-            font-size: 13px;
-            margin-bottom: 8px;
-            line-height: 1.4;
-        }
-
-        .admin-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .btn-download {
-            flex: 1;
-            padding: 12px;
-            background: #27ae60;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s;
-        }
-
-        .btn-download:hover {
-            background: #229954;
-            transform: translateY(-2px);
-        }
-
-        .btn-back {
-            flex: 1;
-            padding: 12px;
-            background: #95a5a6;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s;
-        }
-
-        .btn-back:hover {
-            background: #7f8c8d;
-            transform: translateY(-2px);
-        }
-
-        .message {
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            text-align: center;
-            font-weight: bold;
-        }
-
-        .message.success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-
-        .message.error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 700px; margin: 0 auto; background: white; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); padding: 40px; }
+        h1 { color: #333; margin-bottom: 30px; text-align: center; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; color: #555; font-weight: 600; margin-bottom: 8px; }
+        input, textarea { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-family: inherit; font-size: 14px; }
+        input:focus, textarea:focus { outline: none; border-color: #667eea; box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1); }
+        textarea { resize: vertical; min-height: 80px; }
+        .button-group { display: flex; gap: 10px; margin-top: 30px; }
+        button { flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s; }
+        .btn-submit { background: #667eea; color: white; }
+        .btn-submit:hover { background: #5568d3; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4); }
+        .btn-admin { background: #764ba2; color: white; }
+        .btn-admin:hover { background: #663a8a; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(118, 75, 162, 0.4); }
+        .success-message { background: #d4edda; color: #155724; padding: 15px; border-radius: 8px; margin-top: 20px; display: none; text-align: center; font-weight: 600; }
+        .error-message { background: #f8d7da; color: #721c24; padding: 15px; border-radius: 8px; margin-top: 20px; display: none; text-align: center; font-weight: 600; }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>📚 진로시간 학습지</h1>
-            <p>당신의 진로에 대해 탐색해보세요</p>
-        </div>
+        <h1>📚 진로 학습지</h1>
 
-        <div class="button-group">
-            <button class="btn-main" onclick="showStudentForm()">✏️ 학습지 작성</button>
-            <button class="btn-admin" onclick="showAdminForm()">🔐 관리자</button>
-        </div>
-
-        <!-- 학생 입력 폼 -->
-        <div id="studentForm" class="form-group active">
-            <div id="studentMessage" class="message" style="display: none;"></div>
-
-            <label for="studentName">이름 *</label>
-            <input type="text" id="studentName" placeholder="학생 이름을 입력하세요" required>
-
-            <label for="interest">관심 분야 *</label>
-            <input type="text" id="interest" placeholder="예) 컴퓨터공학, 의학, 경영학" required>
-
-            <label for="reason">계기 *</label>
-            <textarea id="reason" placeholder="이 분야에 관심을 갖게 된 계기는?" required></textarea>
-
-            <label for="activity">탐색 활동 *</label>
-            <textarea id="activity" placeholder="해본 탐색 활동은? (예: 진로특강, 책 읽기, 현장체험 등)" required></textarea>
-
-            <label for="learned">배운 점 *</label>
-            <textarea id="learned" placeholder="활동을 통해 배운 점은?" required></textarea>
-
-            <label for="feeling">느낀 점 *</label>
-            <textarea id="feeling" placeholder="앞으로의 꿈이나 다짐은?" required></textarea>
-
-            <button class="submit-btn" onclick="submitForm()">✓ 제출</button>
-        </div>
-
-        <!-- 관리자 폼 -->
-        <div id="adminForm" class="form-group">
-            <div class="password-input-group">
-                <input type="password" id="adminPassword" placeholder="비밀번호를 입력하세요">
-                <button onclick="checkAdminPassword()">확인</button>
+        <div id="studentForm">
+            <div class="form-group">
+                <label>학번 *</label>
+                <input type="text" id="studentId" placeholder="예: 2024001" required>
             </div>
-            <div id="adminContent" class="admin-content">
-                <h2 style="color: #667eea; margin-bottom: 20px;">📊 학생 데이터</h2>
-                <div id="dataList" class="data-list"></div>
-                <div class="admin-buttons">
-                    <button class="btn-download" onclick="downloadExcel()">📥 모든 데이터 엑셀 다운로드</button>
-                    <button class="btn-back" onclick="goBackToHome()">← 돌아가기</button>
-                </div>
+            <div class="form-group">
+                <label>이름 *</label>
+                <input type="text" id="studentName" placeholder="예: 김철수" required>
             </div>
+            <div class="form-group">
+                <label>관심 분야 *</label>
+                <input type="text" id="interest" placeholder="예: 인공지능, 프로그래밍" required>
+            </div>
+            <div class="form-group">
+                <label>계기 *</label>
+                <textarea id="trigger" placeholder="이 분야에 관심을 갖게 된 계기를 작성해주세요." required></textarea>
+            </div>
+            <div class="form-group">
+                <label>탐색 활동 *</label>
+                <textarea id="activity" placeholder="이 분야를 탐색하기 위해 어떤 활동을 했는지 작성해주세요." required></textarea>
+            </div>
+            <div class="form-group">
+                <label>배운 점 *</label>
+                <textarea id="learned" placeholder="활동을 통해 배운 점을 작성해주세요." required></textarea>
+            </div>
+            <div class="form-group">
+                <label>느낀 점 *</label>
+                <textarea id="felt" placeholder="활동을 통해 느낀 점을 작성해주세요." required></textarea>
+            </div>
+
+            <div class="button-group">
+                <button class="btn-submit" onclick="submitForm()">✓ 제출</button>
+                <button class="btn-admin" onclick="goToAdmin()">🔐 관리자</button>
+            </div>
+
+            <div class="success-message" id="successMessage">✅ 제출 완료되었습니다!</div>
+            <div class="error-message" id="errorMessage"></div>
         </div>
     </div>
 
     <script>
-        // 데이터 저장소 초기화
-        function initializeData() {
-            if (!localStorage.getItem('studentData')) {
-                localStorage.setItem('studentData', JSON.stringify([]));
+        // 페이지 로드 시 제출 상태 확인
+        window.addEventListener('load', function() {
+            const isSubmitted = localStorage.getItem('formSubmitted');
+            if (isSubmitted === 'true') {
+                document.getElementById('studentForm').innerHTML = '<div style="text-align: center; padding: 40px;"><h2 style="color: #667eea; margin-bottom: 20px;">✅ 제출 완료</h2><p style="color: #666; font-size: 16px; margin-bottom: 20px;">귀하의 진로 학습지가 성공적으로 제출되었습니다.</p><button class="btn-admin" style="width: 200px; padding: 12px; background: #764ba2; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;" onclick="goToAdmin()">🔐 관리자 페이지</button></div>';
             }
-        }
+        });
 
-        // 학생 폼 보기
-        function showStudentForm() {
-            document.getElementById('studentForm').classList.add('active');
-            document.getElementById('adminForm').classList.remove('active');
-            document.getElementById('studentMessage').style.display = 'none';
-        }
-
-        // 관리자 폼 보기
-        function showAdminForm() {
-            document.getElementById('adminForm').classList.add('active');
-            document.getElementById('studentForm').classList.remove('active');
-        }
-
-        // 폼 제출
         function submitForm() {
-            const name = document.getElementById('studentName').value.trim();
+            const studentId = document.getElementById('studentId').value.trim();
+            const studentName = document.getElementById('studentName').value.trim();
             const interest = document.getElementById('interest').value.trim();
-            const reason = document.getElementById('reason').value.trim();
+            const trigger = document.getElementById('trigger').value.trim();
             const activity = document.getElementById('activity').value.trim();
             const learned = document.getElementById('learned').value.trim();
-            const feeling = document.getElementById('feeling').value.trim();
+            const felt = document.getElementById('felt').value.trim();
 
-            if (!name || !interest || !reason || !activity || !learned || !feeling) {
-                showMessage('모든 항목을 입력해주세요!', 'error');
+            if (!studentId || !studentName || !interest || !trigger || !activity || !learned || !felt) {
+                document.getElementById('errorMessage').textContent = '⚠️ 모든 항목을 입력해주세요!';
+                document.getElementById('errorMessage').style.display = 'block';
                 return;
             }
 
-            const student = {
-                name,
+            const data = {
+                studentId,
+                studentName,
                 interest,
-                reason,
+                trigger,
                 activity,
                 learned,
-                feeling,
-                timestamp: new Date().toLocaleString('ko-KR')
+                felt,
+                generatedText: `나는 ${interest}에 관심이 있어서, ${trigger}를 계기로 ${activity}를 했다. 이 과정에서 ${learned}를 배웠고, ${felt}를 느꼈다.`,
+                submittedAt: new Date().toLocaleString('ko-KR')
             };
 
-            const data = JSON.parse(localStorage.getItem('studentData'));
-            data.push(student);
-            localStorage.setItem('studentData', JSON.stringify(data));
+            let submissions = JSON.parse(localStorage.getItem('submissions') || '{}');
+            submissions[studentId] = data;
+            localStorage.setItem('submissions', JSON.stringify(submissions));
+            localStorage.setItem('formSubmitted', 'true');
 
-            showMessage('제출되었습니다! 감사합니다 😊', 'success');
-            clearForm();
+            document.getElementById('successMessage').style.display = 'block';
+            document.getElementById('errorMessage').style.display = 'none';
+
+            setTimeout(() => {
+                document.getElementById('studentForm').innerHTML = '<div style="text-align: center; padding: 40px;"><h2 style="color: #667eea; margin-bottom: 20px;">✅ 제출 완료</h2><p style="color: #666; font-size: 16px; margin-bottom: 20px;">귀하의 진로 학습지가 성공적으로 제출되었습니다.</p><button class="btn-admin" style="width: 200px; padding: 12px; background: #764ba2; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;" onclick="goToAdmin()">🔐 관리자 페이지</button></div>';
+            }, 1500);
         }
 
-        // 메시지 표시
-        function showMessage(text, type) {
-            const messageEl = document.getElementById('studentMessage');
-            messageEl.textContent = text;
-            messageEl.className = `message ${type}`;
-            messageEl.style.display = 'block';
-
-            if (type === 'success') {
-                setTimeout(() => {
-                    messageEl.style.display = 'none';
-                }, 3000);
-            }
-        }
-
-        // 폼 초기화
-        function clearForm() {
-            document.getElementById('studentName').value = '';
-            document.getElementById('interest').value = '';
-            document.getElementById('reason').value = '';
-            document.getElementById('activity').value = '';
-            document.getElementById('learned').value = '';
-            document.getElementById('feeling').value = '';
-        }
-
-        // 관리자 비밀번호 확인
-        function checkAdminPassword() {
-            const password = document.getElementById('adminPassword').value;
+        function goToAdmin() {
+            const password = prompt('🔐 관리자 비밀번호를 입력하세요:');
             if (password === '54321') {
-                displayAdminContent();
-                document.getElementById('adminContent').classList.add('active');
+                showAdminPage();
+            } else if (password !== null) {
+                alert('❌ 비밀번호가 틀렸습니다!');
+            }
+        }
+
+        function showAdminPage() {
+            const submissions = JSON.parse(localStorage.getItem('submissions') || '{}');
+            let html = '<div style="background: white; padding: 40px; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.2);"><h1 style="color: #333; margin-bottom: 20px; text-align: center;">🔐 관리자 페이지</h1>';
+
+            if (Object.keys(submissions).length === 0) {
+                html += '<p style="text-align: center; color: #666; font-size: 16px; padding: 40px;">아직 제출된 학습지가 없습니다.</p>';
             } else {
-                alert('비밀번호가 틀렸습니다!');
-                document.getElementById('adminPassword').value = '';
+                html += '<div style="margin-bottom: 20px;">';
+                for (const [studentId, data] of Object.entries(submissions)) {
+                    html += `<div style="background: #f9f9f9; padding: 15px; margin-bottom: 10px; border-left: 4px solid #667eea; cursor: pointer;" onclick="toggleDetails('details_${studentId}')">
+                        <strong style="color: #667eea;">${data.studentId} - ${data.studentName}</strong>
+                        <small style="color: #999;"> (${data.submittedAt})</small>
+                    </div>
+                    <div id="details_${studentId}" style="display: none; background: #f0f4ff; padding: 15px; margin-bottom: 10px; border-radius: 8px; font-size: 14px; line-height: 1.8;">
+                        <p><strong>관심 분야:</strong> ${data.interest}</p>
+                        <p><strong>계기:</strong> ${data.trigger}</p>
+                        <p><strong>탐색 활동:</strong> ${data.activity}</p>
+                        <p><strong>배운 점:</strong> ${data.learned}</p>
+                        <p><strong>느낀 점:</strong> ${data.felt}</p>
+                        <p style="background: #e8f0ff; padding: 10px; border-radius: 5px; margin-top: 10px;"><strong>✨ 생성된 세특:</strong><br>${data.generatedText}</p>
+                    </div>`;
+                }
+                html += '</div>';
+                html += `<button onclick="downloadExcel()" style="width: 100%; padding: 12px; background: #28a745; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; margin-bottom: 10px;">📥 모든 데이터 엑셀 다운로드</button>`;
             }
+
+            html += `<button onclick="location.reload()" style="width: 100%; padding: 12px; background: #667eea; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">← 돌아가기</button></div>`;
+
+            document.body.innerHTML = html;
         }
 
-        // 관리자 콘텐츠 표시
-        function displayAdminContent() {
-            const data = JSON.parse(localStorage.getItem('studentData'));
-            const listEl = document.getElementById('dataList');
-
-            if (data.length === 0) {
-                listEl.innerHTML = '<p style="text-align: center; color: #999;">아직 제출된 데이터가 없습니다.</p>';
-                return;
-            }
-
-            listEl.innerHTML = data.map((item, index) => `
-                <div class="data-item">
-                    <h3>${index + 1}. ${item.name}</h3>
-                    <p><strong>관심 분야:</strong> ${item.interest}</p>
-                    <p><strong>계기:</strong> ${item.reason}</p>
-                    <p><strong>탐색 활동:</strong> ${item.activity}</p>
-                    <p><strong>배운 점:</strong> ${item.learned}</p>
-                    <p><strong>느낀 점:</strong> ${item.feeling}</p>
-                    <p style="color: #999; font-size: 12px;"><strong>제출:</strong> ${item.timestamp}</p>
-                </div>
-            `).join('');
+        function toggleDetails(id) {
+            const elem = document.getElementById(id);
+            elem.style.display = elem.style.display === 'none' ? 'block' : 'none';
         }
 
-        // 엑셀 다운로드
         function downloadExcel() {
-            const data = JSON.parse(localStorage.getItem('studentData'));
+            const submissions = JSON.parse(localStorage.getItem('submissions') || '{}');
+            let csv = '학번,이름,관심분야,계기,탐색활동,배운점,느낀점,생성된세특,제출시간
+';
 
-            if (data.length === 0) {
-                alert('다운로드할 데이터가 없습니다.');
-                return;
+            for (const [studentId, data] of Object.entries(submissions)) {
+                csv += `"${data.studentId}","${data.studentName}","${data.interest}","${data.trigger}","${data.activity}","${data.learned}","${data.felt}","${data.generatedText}","${data.submittedAt}"
+`;
             }
 
-            let csv = '이름,관심분야,계기,탐색활동,배운점,느낀점,제출시간\n';
-            data.forEach(item => {
-                const row = [
-                    item.name,
-                    item.interest,
-                    item.reason,
-                    item.activity,
-                    item.learned,
-                    item.feeling,
-                    item.timestamp
-                ].map(cell => `"${cell.replace(/"/g, '""')}"`).join(',');
-                csv += row + '\n';
-            });
-
-            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a');
-            const url = URL.createObjectURL(blob);
-            link.setAttribute('href', url);
-            link.setAttribute('download', `진로학습지_${new Date().toISOString().split('T')[0]}.csv`);
+            link.href = URL.createObjectURL(blob);
+            link.download = `진로학습지_${new Date().toISOString().split('T')[0]}.csv`;
             link.click();
         }
-
-        // 돌아가기
-        function goBackToHome() {
-            document.getElementById('adminForm').classList.remove('active');
-            document.getElementById('studentForm').classList.add('active');
-            document.getElementById('adminPassword').value = '';
-            document.getElementById('adminContent').classList.remove('active');
-        }
-
-        // 페이지 로드 시 초기화
-        window.addEventListener('load', initializeData);
     </script>
 </body>
 </html>
