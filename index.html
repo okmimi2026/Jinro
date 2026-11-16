@@ -1,183 +1,183 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>진로 학습지</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
-        .container { max-width: 700px; margin: 0 auto; background: white; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); padding: 40px; }
-        h1 { color: #333; margin-bottom: 30px; text-align: center; }
-        .form-group { margin-bottom: 20px; }
-        label { display: block; color: #555; font-weight: 600; margin-bottom: 8px; }
-        input, textarea { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-family: inherit; font-size: 14px; }
-        input:focus, textarea:focus { outline: none; border-color: #667eea; box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1); }
-        textarea { resize: vertical; min-height: 80px; }
-        .button-group { display: flex; gap: 10px; margin-top: 30px; }
-        button { flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s; }
-        .btn-submit { background: #667eea; color: white; }
-        .btn-submit:hover { background: #5568d3; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4); }
-        .btn-admin { background: #764ba2; color: white; }
-        .btn-admin:hover { background: #663a8a; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(118, 75, 162, 0.4); }
-        .success-message { background: #d4edda; color: #155724; padding: 15px; border-radius: 8px; margin-top: 20px; display: none; text-align: center; font-weight: 600; }
-        .error-message { background: #f8d7da; color: #721c24; padding: 15px; border-radius: 8px; margin-top: 20px; display: none; text-align: center; font-weight: 600; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>진로 학습지</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Tahoma,sans-serif;background:#667eea;min-height:100vh;padding:20px}
+.container{max-width:760px;margin:0 auto;background:#fff;border-radius:12px;padding:28px}
+h1{font-size:22px;margin-bottom:6px}
+.sub{color:#666;font-size:14px;margin-bottom:20px}
+label{display:block;font-weight:600;margin:14px 0 6px;font-size:14px}
+input,textarea{width:100%;padding:10px;border:1px solid #ccc;border-radius:6px;font-size:14px;font-family:inherit}
+textarea{min-height:70px;resize:vertical}
+button{padding:12px 18px;border:0;border-radius:6px;font-size:15px;font-weight:600;cursor:pointer}
+.primary{background:#667eea;color:#fff;width:100%;margin-top:22px}
+.ghost{background:#eee;color:#333;margin-top:10px;width:100%}
+.ok{display:none;background:#e7f7ed;border:1px solid #27ae60;color:#1e7e45;padding:14px;border-radius:8px;margin-top:16px;font-weight:600;text-align:center}
+.hide{display:none}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.row button{flex:1}
+.item{padding:10px;border:1px solid #ddd;border-radius:6px;margin-bottom:6px;cursor:pointer;background:#fafafa}
+.item:hover{background:#eef1ff}
+.box{border:1px solid #ddd;border-radius:8px;padding:14px;margin-top:14px;line-height:1.7;font-size:14px;white-space:pre-wrap}
+.cnt{font-size:13px;color:#666;margin-bottom:10px}
+</style>
 </head>
 <body>
-    <div class="container">
-        <h1>📚 진로 학습지</h1>
+<div class="container">
 
-        <div id="studentForm">
-            <div class="form-group">
-                <label>학번 *</label>
-                <input type="text" id="studentId" placeholder="예: 2024001" required>
-            </div>
-            <div class="form-group">
-                <label>이름 *</label>
-                <input type="text" id="studentName" placeholder="예: 김철수" required>
-            </div>
-            <div class="form-group">
-                <label>관심 분야 *</label>
-                <input type="text" id="interest" placeholder="예: 인공지능, 프로그래밍" required>
-            </div>
-            <div class="form-group">
-                <label>계기 *</label>
-                <textarea id="trigger" placeholder="이 분야에 관심을 갖게 된 계기를 작성해주세요." required></textarea>
-            </div>
-            <div class="form-group">
-                <label>탐색 활동 *</label>
-                <textarea id="activity" placeholder="이 분야를 탐색하기 위해 어떤 활동을 했는지 작성해주세요." required></textarea>
-            </div>
-            <div class="form-group">
-                <label>배운 점 *</label>
-                <textarea id="learned" placeholder="활동을 통해 배운 점을 작성해주세요." required></textarea>
-            </div>
-            <div class="form-group">
-                <label>느낀 점 *</label>
-                <textarea id="felt" placeholder="활동을 통해 느낀 점을 작성해주세요." required></textarea>
-            </div>
+  <!-- 학생 화면 -->
+  <div id="studentView">
+    <h1>진로 학습지</h1>
+    <p class="sub">모든 항목을 작성한 뒤 제출 버튼을 눌러주세요.</p>
 
-            <div class="button-group">
-                <button class="btn-submit" onclick="submitForm()">✓ 제출</button>
-                <button class="btn-admin" onclick="goToAdmin()">🔐 관리자</button>
-            </div>
+    <label>학번 *</label>
+    <input id="sid" placeholder="예) 30125">
+    <label>이름 *</label>
+    <input id="sname" placeholder="예) 홍길동">
+    <label>관심 분야 *</label>
+    <input id="field" placeholder="예) 소프트웨어 개발">
+    <label>관심을 갖게 된 계기 *</label>
+    <textarea id="reason"></textarea>
+    <label>탐색 활동 *</label>
+    <textarea id="act"></textarea>
+    <label>배운 점 *</label>
+    <textarea id="learn"></textarea>
+    <label>느낀 점 / 앞으로의 계획 *</label>
+    <textarea id="feel"></textarea>
 
-            <div class="success-message" id="successMessage">✅ 제출 완료되었습니다!</div>
-            <div class="error-message" id="errorMessage"></div>
-        </div>
+    <button class="primary" id="btnSubmit">제출</button>
+    <button class="ghost" id="btnAdmin">관리자</button>
+    <div class="ok" id="okMsg">제출이 완료되었습니다. 수고했습니다!</div>
+  </div>
+
+  <!-- 관리자 화면 -->
+  <div id="adminView" class="hide">
+    <h1>관리자 페이지</h1>
+    <p class="sub">학생을 선택하면 세특 초안이 표시됩니다.</p>
+    <div class="row">
+      <button class="primary" style="margin:0" id="btnExcel">엑셀 다운로드</button>
+      <button class="ghost" style="margin:0" id="btnBack">학생 화면</button>
     </div>
+    <div class="cnt" id="cnt"></div>
+    <div id="list"></div>
+    <div class="box hide" id="detail"></div>
+  </div>
 
-    <script>
-        // 페이지 로드 시 제출 상태 확인
-        window.addEventListener('load', function() {
-            const isSubmitted = localStorage.getItem('formSubmitted');
-            if (isSubmitted === 'true') {
-                document.getElementById('studentForm').innerHTML = '<div style="text-align: center; padding: 40px;"><h2 style="color: #667eea; margin-bottom: 20px;">✅ 제출 완료</h2><p style="color: #666; font-size: 16px; margin-bottom: 20px;">귀하의 진로 학습지가 성공적으로 제출되었습니다.</p><button class="btn-admin" style="width: 200px; padding: 12px; background: #764ba2; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;" onclick="goToAdmin()">🔐 관리자 페이지</button></div>';
-            }
-        });
+</div>
 
-        function submitForm() {
-            const studentId = document.getElementById('studentId').value.trim();
-            const studentName = document.getElementById('studentName').value.trim();
-            const interest = document.getElementById('interest').value.trim();
-            const trigger = document.getElementById('trigger').value.trim();
-            const activity = document.getElementById('activity').value.trim();
-            const learned = document.getElementById('learned').value.trim();
-            const felt = document.getElementById('felt').value.trim();
+<script>
+var KEY = 'jinro_data_v1';
+var PW = '54321';
 
-            if (!studentId || !studentName || !interest || !trigger || !activity || !learned || !felt) {
-                document.getElementById('errorMessage').textContent = '⚠️ 모든 항목을 입력해주세요!';
-                document.getElementById('errorMessage').style.display = 'block';
-                return;
-            }
+function load(){
+  try { return JSON.parse(localStorage.getItem(KEY)) || []; }
+  catch(e){ return []; }
+}
+function save(arr){
+  localStorage.setItem(KEY, JSON.stringify(arr));
+}
+function makeSetuk(d){
+  return '진로 탐색 활동에서 ' + d.field + ' 분야에 관심을 가지게 된 계기로 ' + d.reason +
+    '라고 밝힘. 이를 구체화하기 위해 ' + d.act + ' 등의 활동을 주도적으로 수행함. 활동을 통해 ' +
+    d.learn + '을 알게 되었다고 정리함. 활동 후 ' + d.feel +
+    '라고 소감을 밝히며 자신의 진로에 대한 구체적인 실천 의지를 드러냄.';
+}
+function val(id){ return document.getElementById(id).value.trim(); }
 
-            const data = {
-                studentId,
-                studentName,
-                interest,
-                trigger,
-                activity,
-                learned,
-                felt,
-                generatedText: `나는 ${interest}에 관심이 있어서, ${trigger}를 계기로 ${activity}를 했다. 이 과정에서 ${learned}를 배웠고, ${felt}를 느꼈다.`,
-                submittedAt: new Date().toLocaleString('ko-KR')
-            };
+function submitForm(){
+  var d = {
+    sid: val('sid'), name: val('sname'), field: val('field'),
+    reason: val('reason'), act: val('act'), learn: val('learn'), feel: val('feel')
+  };
+  for (var k in d){
+    if (!d[k]){ alert('모든 항목을 작성해주세요.'); return; }
+  }
+  d.setuk = makeSetuk(d);
+  d.time = new Date().toLocaleString('ko-KR');
 
-            let submissions = JSON.parse(localStorage.getItem('submissions') || '{}');
-            submissions[studentId] = data;
-            localStorage.setItem('submissions', JSON.stringify(submissions));
-            localStorage.setItem('formSubmitted', 'true');
+  var arr = load();
+  var found = -1;
+  for (var i=0;i<arr.length;i++){ if (arr[i].sid === d.sid) found = i; }
+  if (found >= 0) arr[found] = d; else arr.push(d);
+  save(arr);
 
-            document.getElementById('successMessage').style.display = 'block';
-            document.getElementById('errorMessage').style.display = 'none';
+  document.getElementById('okMsg').style.display = 'block';
+  window.scrollTo(0, document.body.scrollHeight);
+}
 
-            setTimeout(() => {
-                document.getElementById('studentForm').innerHTML = '<div style="text-align: center; padding: 40px;"><h2 style="color: #667eea; margin-bottom: 20px;">✅ 제출 완료</h2><p style="color: #666; font-size: 16px; margin-bottom: 20px;">귀하의 진로 학습지가 성공적으로 제출되었습니다.</p><button class="btn-admin" style="width: 200px; padding: 12px; background: #764ba2; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;" onclick="goToAdmin()">🔐 관리자 페이지</button></div>';
-            }, 1500);
-        }
+function goToAdmin(){
+  var p = prompt('관리자 비밀번호를 입력하세요.');
+  if (p === null) return;
+  if (p !== PW){ alert('비밀번호가 올바르지 않습니다.'); return; }
+  document.getElementById('studentView').classList.add('hide');
+  document.getElementById('adminView').classList.remove('hide');
+  render();
+}
+function goBack(){
+  document.getElementById('adminView').classList.add('hide');
+  document.getElementById('studentView').classList.remove('hide');
+}
 
-        function goToAdmin() {
-            const password = prompt('🔐 관리자 비밀번호를 입력하세요:');
-            if (password === '54321') {
-                showAdminPage();
-            } else if (password !== null) {
-                alert('❌ 비밀번호가 틀렸습니다!');
-            }
-        }
+function render(){
+  var arr = load();
+  arr.sort(function(a,b){ return a.sid > b.sid ? 1 : -1; });
+  document.getElementById('cnt').textContent = '총 ' + arr.length + '명 제출';
+  var box = document.getElementById('list');
+  box.innerHTML = '';
+  document.getElementById('detail').classList.add('hide');
+  if (!arr.length){ box.innerHTML = '<p class="sub">아직 제출된 내용이 없습니다.</p>'; return; }
+  for (var i=0;i<arr.length;i++){
+    var div = document.createElement('div');
+    div.className = 'item';
+    div.textContent = arr[i].sid + ' - ' + arr[i].name + ' (' + arr[i].field + ')';
+    div.setAttribute('data-sid', arr[i].sid);
+    div.addEventListener('click', function(){ showDetail(this.getAttribute('data-sid')); });
+    box.appendChild(div);
+  }
+}
+function showDetail(sid){
+  var arr = load(), d = null;
+  for (var i=0;i<arr.length;i++){ if (arr[i].sid === sid) d = arr[i]; }
+  if (!d) return;
+  var el = document.getElementById('detail');
+  el.textContent = '[' + d.sid + ' ' + d.name + ' / 세특 초안]\n\n' + d.setuk;
+  el.classList.remove('hide');
+}
 
-        function showAdminPage() {
-            const submissions = JSON.parse(localStorage.getItem('submissions') || '{}');
-            let html = '<div style="background: white; padding: 40px; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.2);"><h1 style="color: #333; margin-bottom: 20px; text-align: center;">🔐 관리자 페이지</h1>';
+function downloadExcel(){
+  var arr = load();
+  if (!arr.length){ alert('제출된 데이터가 없습니다.'); return; }
+  var head = ['학번','이름','관심분야','계기','탐색활동','배운점','느낀점','생성된세특','제출시각'];
+  var rows = [head];
+  for (var i=0;i<arr.length;i++){
+    var d = arr[i];
+    rows.push([d.sid,d.name,d.field,d.reason,d.act,d.learn,d.feel,d.setuk,d.time]);
+  }
+  var csv = '';
+  for (var r=0;r<rows.length;r++){
+    var line = [];
+    for (var c=0;c<rows[r].length;c++){
+      line.push('"' + String(rows[r][c]).replace(/"/g,'""') + '"');
+    }
+    csv += line.join(',') + '\r\n';
+  }
+  var blob = new Blob(['\uFEFF' + csv], {type:'text/csv;charset=utf-8;'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = '진로학습지_결과.csv';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
 
-            if (Object.keys(submissions).length === 0) {
-                html += '<p style="text-align: center; color: #666; font-size: 16px; padding: 40px;">아직 제출된 학습지가 없습니다.</p>';
-            } else {
-                html += '<div style="margin-bottom: 20px;">';
-                for (const [studentId, data] of Object.entries(submissions)) {
-                    html += `<div style="background: #f9f9f9; padding: 15px; margin-bottom: 10px; border-left: 4px solid #667eea; cursor: pointer;" onclick="toggleDetails('details_${studentId}')">
-                        <strong style="color: #667eea;">${data.studentId} - ${data.studentName}</strong>
-                        <small style="color: #999;"> (${data.submittedAt})</small>
-                    </div>
-                    <div id="details_${studentId}" style="display: none; background: #f0f4ff; padding: 15px; margin-bottom: 10px; border-radius: 8px; font-size: 14px; line-height: 1.8;">
-                        <p><strong>관심 분야:</strong> ${data.interest}</p>
-                        <p><strong>계기:</strong> ${data.trigger}</p>
-                        <p><strong>탐색 활동:</strong> ${data.activity}</p>
-                        <p><strong>배운 점:</strong> ${data.learned}</p>
-                        <p><strong>느낀 점:</strong> ${data.felt}</p>
-                        <p style="background: #e8f0ff; padding: 10px; border-radius: 5px; margin-top: 10px;"><strong>✨ 생성된 세특:</strong><br>${data.generatedText}</p>
-                    </div>`;
-                }
-                html += '</div>';
-                html += `<button onclick="downloadExcel()" style="width: 100%; padding: 12px; background: #28a745; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; margin-bottom: 10px;">📥 모든 데이터 엑셀 다운로드</button>`;
-            }
-
-            html += `<button onclick="location.reload()" style="width: 100%; padding: 12px; background: #667eea; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">← 돌아가기</button></div>`;
-
-            document.body.innerHTML = html;
-        }
-
-        function toggleDetails(id) {
-            const elem = document.getElementById(id);
-            elem.style.display = elem.style.display === 'none' ? 'block' : 'none';
-        }
-
-        function downloadExcel() {
-            const submissions = JSON.parse(localStorage.getItem('submissions') || '{}');
-            let csv = '학번,이름,관심분야,계기,탐색활동,배운점,느낀점,생성된세특,제출시간
-';
-
-            for (const [studentId, data] of Object.entries(submissions)) {
-                csv += `"${data.studentId}","${data.studentName}","${data.interest}","${data.trigger}","${data.activity}","${data.learned}","${data.felt}","${data.generatedText}","${data.submittedAt}"
-`;
-            }
-
-            const blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = `진로학습지_${new Date().toISOString().split('T')[0]}.csv`;
-            link.click();
-        }
-    </script>
+document.getElementById('btnSubmit').addEventListener('click', submitForm);
+document.getElementById('btnAdmin').addEventListener('click', goToAdmin);
+document.getElementById('btnExcel').addEventListener('click', downloadExcel);
+document.getElementById('btnBack').addEventListener('click', goBack);
+</script>
 </body>
 </html>
