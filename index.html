@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>중3 진로 학습지</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 600px; margin: 0 auto; background: white; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); padding: 30px; }
+        h1 { color: #333; margin-bottom: 10px; text-align: center; font-size: 24px; }
+        .subtitle { text-align: center; color: #666; margin-bottom: 30px; font-size: 14px; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; font-weight: 600; margin-bottom: 8px; color: #333; font-size: 14px; }
+        input, textarea { width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 6px; font-size: 14px; font-family: inherit; transition: border-color 0.3s; }
+        input:focus, textarea:focus { outline: none; border-color: #667eea; }
+        textarea { resize: vertical; min-height: 80px; }
+        button { width: 100%; padding: 12px; background: #667eea; color: white; border: none; border-radius: 6px; font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 20px; transition: background 0.3s; }
+        button:hover { background: #764ba2; }
+        button.copy-btn { background: #48bb78; font-size: 14px; margin-top: 10px; }
+        button.copy-btn:hover { background: #38a169; }
+        .result { margin-top: 30px; padding: 20px; background: #f9f9f9; border-left: 4px solid #667eea; border-radius: 6px; display: none; }
+        .result.show { display: block; }
+        .result-title { font-weight: 600; color: #333; margin-bottom: 10px; }
+        .result-text { color: #555; line-height: 1.8; font-size: 14px; }
+        .copy-alert { color: #48bb78; font-size: 12px; margin-top: 5px; display: none; }
+        .copy-alert.show { display: block; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 중3 진로활동 학습지</h1>
+        <p class="subtitle">진로에 대해 탐색한 내용을 자유롭게 작성해주세요</p>
+        
+        <form id="careerForm">
+            <div class="form-group">
+                <label for="name">학생명 *</label>
+                <input type="text" id="name" placeholder="홍길동" required>
+            </div>
+
+            <div class="form-group">
+                <label for="interest">1. 관심 있는 진로 분야는? *</label>
+                <input type="text" id="interest" placeholder="예: IT, 의료, 교육, 예술 등" required>
+            </div>
+
+            <div class="form-group">
+                <label for="reason">2. 이 분야에 관심을 갖게 된 계기는 무엇인가요? *</label>
+                <textarea id="reason" placeholder="어떤 경험이나 일을 통해 관심을 갖게 되었는지 작성해주세요" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="activity">3. 이 분야를 탐색하기 위해 어떤 활동을 했나요? *</label>
+                <textarea id="activity" placeholder="예: 관련 직업인 인터뷰, 책 읽기, 동아리 활동, 체험활동 등" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="learned">4. 위의 활동을 통해 무엇을 배웠거나 깨달았나요? *</label>
+                <textarea id="learned" placeholder="구체적인 사실이나 깨달음을 써주세요" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="feeling">5. 이 활동을 통해 느낀 점과 향후 다짐을 작성해주세요 *</label>
+                <textarea id="feeling" placeholder="성장 과정, 앞으로의 목표 등을 자유롭게 작성해주세요" required></textarea>
+            </div>
+
+            <button type="submit">제출하고 세특 초안 확인하기</button>
+        </form>
+
+        <div class="result" id="result">
+            <div class="result-title">✅ 세특 작성 초안</div>
+            <div class="result-text" id="resultText"></div>
+            <button class="copy-btn" onclick="copyToClipboard()">📋 복사하기</button>
+            <div class="copy-alert" id="copyAlert">복사되었습니다!</div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('careerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const interest = document.getElementById('interest').value;
+            const reason = document.getElementById('reason').value;
+            const activity = document.getElementById('activity').value;
+            const learned = document.getElementById('learned').value;
+            const feeling = document.getElementById('feeling').value;
+            
+            const sespecial = `[${name}] ${interest} 분야에 관심을 갖게 되어 이를 탐색하기 위한 활동을 전개함. ${reason} 이를 바탕으로 ${activity}를 실시하였으며, ${learned}라는 점을 배우게 됨. 이러한 경험을 통해 ${feeling}`;
+            
+            document.getElementById('resultText').textContent = sespecial;
+            document.getElementById('result').classList.add('show');
+            document.getElementById('copyAlert').classList.remove('show');
+        });
+
+        function copyToClipboard() {
+            const text = document.getElementById('resultText').textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                document.getElementById('copyAlert').classList.add('show');
+                setTimeout(() => {
+                    document.getElementById('copyAlert').classList.remove('show');
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
