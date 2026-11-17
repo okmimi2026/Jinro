@@ -1,183 +1,198 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>진로 학습지</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>진로 탐색 학습지</title>
+
+<!-- =============================================== -->
+<!--  ↓↓↓ 여기 두 줄만 바꾸세요 ↓↓↓                   -->
+<!-- =============================================== -->
+<script>
+var GAS_URL   = "https://script.google.com/macros/s/AKfycbyCi2tSf9mOSExHRUcJSAZgmARCAE2BhVopmXNmiXaY7vIXTTjLNUdceo-2KAo1eY6a/exec";
+var SHEET_URL = "https://docs.google.com/spreadsheets/d/14y7papVdY7xXNNjWrIHRnPHp4jh2D-4d0snxmAg7v44/edit";
+var ADMIN_PW  = "54321";
+</script>
+<!-- =============================================== -->
+
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Segoe UI',Tahoma,sans-serif;background:#667eea;min-height:100vh;padding:20px}
-.container{max-width:760px;margin:0 auto;background:#fff;border-radius:12px;padding:28px}
-h1{font-size:22px;margin-bottom:6px}
-.sub{color:#666;font-size:14px;margin-bottom:20px}
-label{display:block;font-weight:600;margin:14px 0 6px;font-size:14px}
-input,textarea{width:100%;padding:10px;border:1px solid #ccc;border-radius:6px;font-size:14px;font-family:inherit}
-textarea{min-height:70px;resize:vertical}
-button{padding:12px 18px;border:0;border-radius:6px;font-size:15px;font-weight:600;cursor:pointer}
-.primary{background:#667eea;color:#fff;width:100%;margin-top:22px}
-.ghost{background:#eee;color:#333;margin-top:10px;width:100%}
-.ok{display:none;background:#e7f7ed;border:1px solid #27ae60;color:#1e7e45;padding:14px;border-radius:8px;margin-top:16px;font-weight:600;text-align:center}
-.hide{display:none}
-.row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
-.row button{flex:1}
-.item{padding:10px;border:1px solid #ddd;border-radius:6px;margin-bottom:6px;cursor:pointer;background:#fafafa}
-.item:hover{background:#eef1ff}
-.box{border:1px solid #ddd;border-radius:8px;padding:14px;margin-top:14px;line-height:1.7;font-size:14px;white-space:pre-wrap}
-.cnt{font-size:13px;color:#666;margin-bottom:10px}
+*{box-sizing:border-box}
+body{font-family:-apple-system,"Malgun Gothic",sans-serif;margin:0;padding:16px;background:#f4f6f8;color:#1f2937;line-height:1.6}
+.wrap{max-width:720px;margin:0 auto}
+h1{font-size:22px;margin:0 0 4px}
+.sub{color:#6b7280;font-size:14px;margin-bottom:16px}
+.card{background:#fff;border:1px solid #d1d5db;border-radius:8px;padding:16px;margin-bottom:12px}
+label{display:block;font-weight:bold;font-size:15px;margin:14px 0 6px}
+.hint{font-weight:normal;color:#6b7280;font-size:13px}
+input,textarea,select{width:100%;padding:10px;border:1px solid #d1d5db;border-radius:6px;font-size:15px;font-family:inherit}
+textarea{min-height:76px;resize:vertical}
+button{width:100%;padding:14px;border:0;border-radius:6px;font-size:16px;font-weight:bold;cursor:pointer;margin-top:12px}
+.main{background:#2563eb;color:#fff}
+.sub2{background:#e5e7eb;color:#374151;font-size:14px;padding:10px}
+.row{display:flex;gap:10px}
+.row>div{flex:1}
+#msg{display:none;padding:12px;border-radius:6px;margin-top:12px;font-size:14px}
+.ok{background:#ecfdf5;color:#065f46;border:1px solid #6ee7b7}
+.ng{background:#fef2f2;color:#991b1b;border:1px solid #fca5a5}
+#out{display:none}
+.pre{background:#f9fafb;border:1px solid #d1d5db;border-radius:6px;padding:12px;font-size:15px;white-space:pre-wrap}
+.adm{margin-top:20px;text-align:center}
+.adm a{color:#9ca3af;font-size:13px;text-decoration:underline;cursor:pointer}
 </style>
 </head>
 <body>
-<div class="container">
+<div class="wrap">
 
-  <!-- 학생 화면 -->
-  <div id="studentView">
-    <h1>진로 학습지</h1>
-    <p class="sub">모든 항목을 작성한 뒤 제출 버튼을 눌러주세요.</p>
+  <h1>진로 탐색 학습지</h1>
+  <div class="sub">아래 7개 항목을 모두 채우고 제출하세요. 제출하면 선생님께 바로 전송됩니다.</div>
 
-    <label>학번 *</label>
-    <input id="sid" placeholder="예) 30125">
-    <label>이름 *</label>
-    <input id="sname" placeholder="예) 홍길동">
-    <label>관심 분야 *</label>
-    <input id="field" placeholder="예) 소프트웨어 개발">
-    <label>관심을 갖게 된 계기 *</label>
-    <textarea id="reason"></textarea>
-    <label>탐색 활동 *</label>
-    <textarea id="act"></textarea>
-    <label>배운 점 *</label>
-    <textarea id="learn"></textarea>
-    <label>느낀 점 / 앞으로의 계획 *</label>
-    <textarea id="feel"></textarea>
-
-    <button class="primary" id="btnSubmit">제출</button>
-    <button class="ghost" id="btnAdmin">관리자</button>
-    <div class="ok" id="okMsg">제출이 완료되었습니다. 수고했습니다!</div>
-  </div>
-
-  <!-- 관리자 화면 -->
-  <div id="adminView" class="hide">
-    <h1>관리자 페이지</h1>
-    <p class="sub">학생을 선택하면 세특 초안이 표시됩니다.</p>
+  <div class="card">
     <div class="row">
-      <button class="primary" style="margin:0" id="btnExcel">엑셀 다운로드</button>
-      <button class="ghost" style="margin:0" id="btnBack">학생 화면</button>
+      <div>
+        <label>학번 <span class="hint">(예: 30112)</span></label>
+        <input id="hakbun" inputmode="numeric" placeholder="30112">
+      </div>
+      <div>
+        <label>이름</label>
+        <input id="name" placeholder="홍길동">
+      </div>
     </div>
-    <div class="cnt" id="cnt"></div>
-    <div id="list"></div>
-    <div class="box hide" id="detail"></div>
+
+    <label>1. 나의 관심 진로 분야</label>
+    <input id="field" placeholder="예: 간호사, 소프트웨어 개발자, 건축가">
+
+    <label>2. 관심을 갖게 된 계기 <span class="hint">언제, 무엇을 보고 관심이 생겼나요?</span></label>
+    <textarea id="reason" placeholder="예: 2학년 때 과학 수업에서 인체 단원을 배우며 사람의 몸에 흥미를 느꼈고..."></textarea>
+
+    <label>3. 내가 한 탐색 활동 <span class="hint">찾아본 자료, 읽은 책, 인터뷰, 체험 등</span></label>
+    <textarea id="activity" placeholder="예: 직업백과에서 간호사 업무를 조사하고, 관련 다큐멘터리를 시청했으며..."></textarea>
+
+    <label>4. 탐색을 통해 알게 된 점 <span class="hint">직업의 역할, 필요한 역량, 진학 경로 등</span></label>
+    <textarea id="learned" placeholder="예: 간호사는 환자 간호뿐 아니라 의료진 간 소통이 중요하다는 것을 알게 되었고..."></textarea>
+
+    <label>5. 느낀 점과 앞으로의 계획</label>
+    <textarea id="felt" placeholder="예: 꾸준한 공부와 봉사 경험이 필요하다고 느껴 생명과학 공부에 더 집중하기로..."></textarea>
+
+    <button class="main" onclick="submitForm()">세특 생성 후 제출하기</button>
+    <div id="msg"></div>
   </div>
 
+  <div class="card" id="out">
+    <label style="margin-top:0">생성된 세특 문구 <span class="hint">(선생님께 전송된 내용)</span></label>
+    <div class="pre" id="setuk"></div>
+    <button class="sub2" onclick="copySetuk()">문구 복사하기</button>
+  </div>
+
+  <div class="adm"><a onclick="openAdmin()">선생님용</a></div>
 </div>
 
 <script>
-var KEY = 'jinro_data_v1';
-var PW = '54321';
+function val(id){
+  return document.getElementById(id).value.trim();
+}
 
-function load(){
-  try { return JSON.parse(localStorage.getItem(KEY)) || []; }
-  catch(e){ return []; }
+function show(text, good){
+  var m = document.getElementById("msg");
+  m.innerHTML = text;
+  m.className = good ? "ok" : "ng";
+  m.style.display = "block";
 }
-function save(arr){
-  localStorage.setItem(KEY, JSON.stringify(arr));
-}
+
 function makeSetuk(d){
-  return '진로 탐색 활동에서 ' + d.field + ' 분야에 관심을 가지게 된 계기로 ' + d.reason +
-    '라고 밝힘. 이를 구체화하기 위해 ' + d.act + ' 등의 활동을 주도적으로 수행함. 활동을 통해 ' +
-    d.learn + '을 알게 되었다고 정리함. 활동 후 ' + d.feel +
-    '라고 소감을 밝히며 자신의 진로에 대한 구체적인 실천 의지를 드러냄.';
+  var s = "";
+  s += "'" + d.field + "' 분야에 관심을 가지고 진로 탐색 활동에 참여함. ";
+  s += d.reason + " 이를 계기로 관심 분야를 구체화함. ";
+  s += "탐색 활동으로 " + d.activity + " ";
+  s += "그 결과 " + d.learned + " ";
+  s += "활동 소감으로 " + d.felt + " ";
+  s += "자신의 진로를 주도적으로 탐색하고 구체적인 실천 계획을 세우는 모습이 돋보임.";
+  return s.replace(/\s+/g, " ").trim();
 }
-function val(id){ return document.getElementById(id).value.trim(); }
 
 function submitForm(){
   var d = {
-    sid: val('sid'), name: val('sname'), field: val('field'),
-    reason: val('reason'), act: val('act'), learn: val('learn'), feel: val('feel')
+    hakbun: val("hakbun"), name: val("name"), field: val("field"),
+    reason: val("reason"), activity: val("activity"),
+    learned: val("learned"), felt: val("felt")
   };
-  for (var k in d){
-    if (!d[k]){ alert('모든 항목을 작성해주세요.'); return; }
+
+  var names = {hakbun:"학번", name:"이름", field:"관심 분야", reason:"계기",
+               activity:"탐색 활동", learned:"알게 된 점", felt:"느낀 점"};
+  var empty = [];
+  for (var k in names){
+    if (!d[k]) { empty.push(names[k]); }
   }
+  if (empty.length > 0){
+    show("다음 항목을 채워주세요 : <b>" + empty.join(", ") + "</b>", false);
+    return;
+  }
+
   d.setuk = makeSetuk(d);
-  d.time = new Date().toLocaleString('ko-KR');
+  document.getElementById("setuk").innerText = d.setuk;
+  document.getElementById("out").style.display = "block";
 
-  var arr = load();
-  var found = -1;
-  for (var i=0;i<arr.length;i++){ if (arr[i].sid === d.sid) found = i; }
-  if (found >= 0) arr[found] = d; else arr.push(d);
-  save(arr);
+  try {
+    localStorage.setItem("jinro_" + d.hakbun, JSON.stringify(d));
+  } catch(e) {}
 
-  document.getElementById('okMsg').style.display = 'block';
-  window.scrollTo(0, document.body.scrollHeight);
-}
-
-function goToAdmin(){
-  var p = prompt('관리자 비밀번호를 입력하세요.');
-  if (p === null) return;
-  if (p !== PW){ alert('비밀번호가 올바르지 않습니다.'); return; }
-  document.getElementById('studentView').classList.add('hide');
-  document.getElementById('adminView').classList.remove('hide');
-  render();
-}
-function goBack(){
-  document.getElementById('adminView').classList.add('hide');
-  document.getElementById('studentView').classList.remove('hide');
-}
-
-function render(){
-  var arr = load();
-  arr.sort(function(a,b){ return a.sid > b.sid ? 1 : -1; });
-  document.getElementById('cnt').textContent = '총 ' + arr.length + '명 제출';
-  var box = document.getElementById('list');
-  box.innerHTML = '';
-  document.getElementById('detail').classList.add('hide');
-  if (!arr.length){ box.innerHTML = '<p class="sub">아직 제출된 내용이 없습니다.</p>'; return; }
-  for (var i=0;i<arr.length;i++){
-    var div = document.createElement('div');
-    div.className = 'item';
-    div.textContent = arr[i].sid + ' - ' + arr[i].name + ' (' + arr[i].field + ')';
-    div.setAttribute('data-sid', arr[i].sid);
-    div.addEventListener('click', function(){ showDetail(this.getAttribute('data-sid')); });
-    box.appendChild(div);
+  if (GAS_URL.indexOf("http") !== 0){
+    show("⚠️ 전송 주소가 설정되지 않았습니다. 선생님께 알려주세요.", false);
+    return;
   }
-}
-function showDetail(sid){
-  var arr = load(), d = null;
-  for (var i=0;i<arr.length;i++){ if (arr[i].sid === sid) d = arr[i]; }
-  if (!d) return;
-  var el = document.getElementById('detail');
-  el.textContent = '[' + d.sid + ' ' + d.name + ' / 세특 초안]\n\n' + d.setuk;
-  el.classList.remove('hide');
-}
 
-function downloadExcel(){
-  var arr = load();
-  if (!arr.length){ alert('제출된 데이터가 없습니다.'); return; }
-  var head = ['학번','이름','관심분야','계기','탐색활동','배운점','느낀점','생성된세특','제출시각'];
-  var rows = [head];
-  for (var i=0;i<arr.length;i++){
-    var d = arr[i];
-    rows.push([d.sid,d.name,d.field,d.reason,d.act,d.learn,d.feel,d.setuk,d.time]);
-  }
-  var csv = '';
-  for (var r=0;r<rows.length;r++){
-    var line = [];
-    for (var c=0;c<rows[r].length;c++){
-      line.push('"' + String(rows[r][c]).replace(/"/g,'""') + '"');
+  show("전송 중입니다...", true);
+
+  fetch(GAS_URL, {
+    method: "POST",
+    headers: {"Content-Type": "text/plain;charset=utf-8"},
+    body: JSON.stringify(d)
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(res){
+    if (res && res.ok){
+      show("✅ <b>제출 완료!</b> 선생님께 정상 전송되었습니다.", true);
+    } else {
+      show("❌ 전송 실패 : " + (res && res.error ? res.error : "알 수 없는 오류"), false);
     }
-    csv += line.join(',') + '\r\n';
-  }
-  var blob = new Blob(['\uFEFF' + csv], {type:'text/csv;charset=utf-8;'});
-  var a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = '진로학습지_결과.csv';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
+  })
+  .catch(function(){
+    fetch(GAS_URL, {
+      method: "POST", mode: "no-cors",
+      headers: {"Content-Type": "text/plain;charset=utf-8"},
+      body: JSON.stringify(d)
+    })
+    .then(function(){
+      show("✅ <b>제출 완료!</b> (전송함) 화면의 문구를 확인하세요.", true);
+    })
+    .catch(function(){
+      show("❌ 인터넷 연결을 확인하고 다시 눌러주세요.", false);
+    });
+  });
 }
 
-document.getElementById('btnSubmit').addEventListener('click', submitForm);
-document.getElementById('btnAdmin').addEventListener('click', goToAdmin);
-document.getElementById('btnExcel').addEventListener('click', downloadExcel);
-document.getElementById('btnBack').addEventListener('click', goBack);
+function copySetuk(){
+  var t = document.getElementById("setuk").innerText;
+  if (navigator.clipboard){
+    navigator.clipboard.writeText(t);
+    alert("복사되었습니다.");
+  } else {
+    alert("직접 선택해서 복사해주세요.");
+  }
+}
+
+function openAdmin(){
+  var pw = prompt("관리자 비밀번호를 입력하세요.");
+  if (pw === null) { return; }
+  if (pw !== ADMIN_PW){
+    alert("비밀번호가 다릅니다.");
+    return;
+  }
+  if (SHEET_URL.indexOf("http") === 0){
+    window.open(SHEET_URL, "_blank");
+  } else {
+    alert("구글 시트 주소가 아직 입력되지 않았습니다.\nindex.html 상단의 SHEET_URL 을 채워주세요.");
+  }
+}
 </script>
 </body>
 </html>
